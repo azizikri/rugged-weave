@@ -54,7 +54,7 @@
     "@types/node": "^22.19.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": "bun x biome check --write"
+    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": "bun x biome check --write --no-errors-on-unmatched"
   },
   "packageManager": "bun@1.2.19"
 }
