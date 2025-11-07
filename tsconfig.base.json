@@ -4,6 +4,10 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "cloudflare:workers": ["apps/server/worker-configuration.d.ts"]
+    },
     "lib": ["ESNext"],
     "verbatimModuleSyntax": true,
     "strict": true,

@@ -3,13 +3,17 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+
+const tailwindPlugin = tailwindcss() as unknown as PluginOption;
+const routerPlugin = tanstackRouter({}) as PluginOption;
+const cloudflarePlugin = cloudflare() as PluginOption;
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
-    tanstackRouter({}),
+    tailwindPlugin,
+    routerPlugin,
     react(),
     VitePWA({
       registerType: "autoUpdate",
@@ -22,7 +26,7 @@ export default defineConfig({
       pwaAssets: { disabled: false, config: true },
       devOptions: { enabled: true },
     }),
-    cloudflare(),
+    cloudflarePlugin,
   ],
   resolve: {
     alias: {
