@@ -34,7 +34,10 @@
     "db:push": "turbo -F @rugged-weave/db db:push",
     "db:studio": "turbo -F @rugged-weave/db db:studio",
     "db:generate": "turbo -F @rugged-weave/db db:generate",
-    "db:migrate": "turbo -F @rugged-weave/db db:migrate"
+    "db:migrate": "turbo -F @rugged-weave/db db:migrate",
+    "deploy:all": "turbo run deploy --parallel",
+    "deploy:web": "turbo -F web deploy",
+    "deploy:server": "turbo -F server deploy"
   },
   "dependencies": {
     "dotenv": "^17.2.2",
