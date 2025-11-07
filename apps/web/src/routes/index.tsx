@@ -24,6 +24,13 @@ const TITLE_TEXT = `
 
 function HomeComponent() {
   const healthCheck = useQuery(trpc.healthCheck.queryOptions());
+  const apiStatusLabel = (() => {
+    if (healthCheck.isLoading) {
+      return "Checking...";
+    }
+
+    return healthCheck.data ? "Connected" : "Disconnected";
+  })();
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-2">
@@ -36,11 +43,7 @@ function HomeComponent() {
               className={`h-2 w-2 rounded-full ${healthCheck.data ? "bg-green-500" : "bg-red-500"}`}
             />
             <span className="text-muted-foreground text-sm">
-              {healthCheck.isLoading
-                ? "Checking..."
-                : healthCheck.data
-                  ? "Connected"
-                  : "Disconnected"}
+              {apiStatusLabel}
             </span>
           </div>
         </section>
