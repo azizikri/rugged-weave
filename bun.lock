@@ -100,7 +100,6 @@
         "@trpc/client": "catalog:",
         "@trpc/server": "catalog:",
         "dotenv": "catalog:",
-        "drizzle-orm": "catalog:",
         "hono": "catalog:",
         "zod": "catalog:",
       },

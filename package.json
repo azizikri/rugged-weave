@@ -54,9 +54,7 @@
     "@types/node": "^22.13.11"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-      "bun x ultracite fix"
-    ]
+    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": "bun x biome check --write"
   },
   "packageManager": "bun@1.2.19"
 }

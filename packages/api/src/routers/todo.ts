@@ -1,6 +1,6 @@
 import { db } from "@rugged-weave/db";
+import { eq } from "@rugged-weave/db/operators";
 import { todo } from "@rugged-weave/db/schema/todo";
-import { eq } from "drizzle-orm";
 import z from "zod";
 import { publicProcedure, router } from "../index";
 
