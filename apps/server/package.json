@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "wrangler deploy --dry-run",
+    "check-types": "tsc -b",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+    "dev": "wrangler dev --port=3000",
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "hono": "catalog:",
+    "@trpc/server": "catalog:",
+    "@hono/trpc-server": "^0.4.0",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@rugged-weave/api": "workspace:*",
+    "@rugged-weave/auth": "workspace:*",
+    "@rugged-weave/db": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "tsdown": "catalog:",
+    "wrangler": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
