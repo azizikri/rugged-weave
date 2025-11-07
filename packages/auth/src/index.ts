@@ -1,14 +1,14 @@
-import { betterAuth, type BetterAuthOptions } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { env } from "cloudflare:workers";
 import { db } from "@rugged-weave/db";
 import * as schema from "@rugged-weave/db/schema/auth";
-import { env } from "cloudflare:workers";
+import { type BetterAuthOptions, betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 export const auth = betterAuth<BetterAuthOptions>({
   database: drizzleAdapter(db, {
     provider: "sqlite",
 
-    schema: schema,
+    schema,
   }),
   trustedOrigins: [env.CORS_ORIGIN],
   emailAndPassword: {
