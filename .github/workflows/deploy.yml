@@ -59,70 +59,17 @@ jobs:
       - name: Build workspaces
         run: bun run build
 
-  migrate_db:
-    name: Apply D1 migrations
+  deploy:
+    name: Deploy All
     needs: ci
     runs-on: ubuntu-latest
+    environment: production
     env:
       CI: true
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_DATABASE_ID: ${{ secrets.CLOUDFLARE_DATABASE_ID }}
       CLOUDFLARE_D1_TOKEN: ${{ secrets.CLOUDFLARE_D1_TOKEN }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Bun ${{ env.BUN_VERSION }}
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ env.BUN_VERSION }}
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Verify environment variables
-        run: |
-          echo "CI=$CI"
-          echo "CLOUDFLARE_ACCOUNT_ID is set: $([[ -n "$CLOUDFLARE_ACCOUNT_ID" ]] && echo "yes" || echo "no")"
-          echo "CLOUDFLARE_DATABASE_ID is set: $([[ -n "$CLOUDFLARE_DATABASE_ID" ]] && echo "yes" || echo "no")"
-          echo "CLOUDFLARE_D1_TOKEN is set: $([[ -n "$CLOUDFLARE_D1_TOKEN" ]] && echo "yes" || echo "no")"
-
-      - name: Run drizzle push
-        run: bun run db:push
-
-  deploy_server:
-    name: Deploy API Worker
-    needs: migrate_db
-    runs-on: ubuntu-latest
-    environment: production
-    env:
-      CI: true
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Bun ${{ env.BUN_VERSION }}
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ env.BUN_VERSION }}
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Publish worker
-        run: bunx wrangler deploy --config apps/server/wrangler.jsonc
-
-  deploy_web:
-    name: Deploy Web Worker
-    needs: deploy_server
-    runs-on: ubuntu-latest
-    environment: production
-    env:
-      CI: true
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
     steps:
       - name: Checkout
@@ -136,5 +83,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Publish worker
-        run: bunx wrangler deploy --config apps/web/wrangler.jsonc
+      - name: Apply database migrations
+        run: bun run db:push
+
+      - name: Deploy all services
+        run: bun run deploy:all
