@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-dotenv.config({
-  path: "../../apps/server/.env",
-});
+if (!process.env.CI) {
+  dotenv.config({
+    path: "../../apps/server/.env",
+  });
+}
 
 const getRequiredEnvVar = (value: string | undefined, key: string): string => {
   if (!value) {
