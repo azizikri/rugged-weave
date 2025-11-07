@@ -80,6 +80,13 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Verify environment variables
+        run: |
+          echo "CI=$CI"
+          echo "CLOUDFLARE_ACCOUNT_ID is set: $([[ -n "$CLOUDFLARE_ACCOUNT_ID" ]] && echo "yes" || echo "no")"
+          echo "CLOUDFLARE_DATABASE_ID is set: $([[ -n "$CLOUDFLARE_DATABASE_ID" ]] && echo "yes" || echo "no")"
+          echo "CLOUDFLARE_D1_TOKEN is set: $([[ -n "$CLOUDFLARE_D1_TOKEN" ]] && echo "yes" || echo "no")"
+
       - name: Run drizzle push
         run: bun run db:push
 

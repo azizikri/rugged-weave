@@ -1,6 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalPassThroughEnv": [
+    "CI",
+    "CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_DATABASE_ID",
+    "CLOUDFLARE_D1_TOKEN",
+    "CLOUDFLARE_API_TOKEN",
+    "VITE_SERVER_URL"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -19,13 +27,7 @@
     },
     "db:push": {
       "cache": false,
-      "persistent": true,
-      "env": [
-        "CLOUDFLARE_ACCOUNT_ID",
-        "CLOUDFLARE_DATABASE_ID",
-        "CLOUDFLARE_D1_TOKEN",
-        "CI"
-      ]
+      "persistent": true
     },
     "db:studio": {
       "cache": false,
@@ -33,13 +35,7 @@
     },
     "db:migrate": {
       "cache": false,
-      "persistent": true,
-      "env": [
-        "CLOUDFLARE_ACCOUNT_ID",
-        "CLOUDFLARE_DATABASE_ID",
-        "CLOUDFLARE_D1_TOKEN",
-        "CI"
-      ]
+      "persistent": true
     },
     "db:generate": {
       "cache": false,
@@ -47,13 +43,7 @@
     },
     "deploy": {
       "cache": false,
-      "persistent": true,
-      "env": [
-        "CLOUDFLARE_API_TOKEN",
-        "CLOUDFLARE_ACCOUNT_ID",
-        "VITE_SERVER_URL",
-        "CI"
-      ]
+      "persistent": true
     }
   }
 }
