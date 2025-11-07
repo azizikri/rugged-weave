@@ -19,7 +19,13 @@
     },
     "db:push": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "CLOUDFLARE_ACCOUNT_ID",
+        "CLOUDFLARE_DATABASE_ID",
+        "CLOUDFLARE_D1_TOKEN",
+        "CI"
+      ]
     },
     "db:studio": {
       "cache": false,
@@ -27,7 +33,13 @@
     },
     "db:migrate": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "CLOUDFLARE_ACCOUNT_ID",
+        "CLOUDFLARE_DATABASE_ID",
+        "CLOUDFLARE_D1_TOKEN",
+        "CI"
+      ]
     },
     "db:generate": {
       "cache": false,
@@ -35,7 +47,13 @@
     },
     "deploy": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "CLOUDFLARE_API_TOKEN",
+        "CLOUDFLARE_ACCOUNT_ID",
+        "VITE_SERVER_URL",
+        "CI"
+      ]
     }
   }
 }
