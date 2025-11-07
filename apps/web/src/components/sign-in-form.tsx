@@ -3,16 +3,17 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import z from "zod";
 import { authClient } from "@/lib/auth-client";
+import { getErrorMessage } from "@/lib/utils";
 import Loader from "./loader";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignInForm({
-  onSwitchToSignUp,
-}: {
+type SignInFormProps = {
   onSwitchToSignUp: () => void;
-}) {
+};
+
+export default function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   const navigate = useNavigate({
     from: "/",
   });
@@ -37,7 +38,7 @@ export default function SignInForm({
             toast.success("Sign in successful");
           },
           onError: (error) => {
-            toast.error(error.error.message || error.error.statusText);
+            toast.error(getErrorMessage(error, "Unable to sign in"));
           },
         }
       );
@@ -55,8 +56,13 @@ export default function SignInForm({
   }
 
   return (
-    <div className="mx-auto mt-10 w-full max-w-md p-6">
-      <h1 className="mb-6 text-center font-bold text-3xl">Welcome Back</h1>
+    <div className="mx-auto w-full max-w-md space-y-6 rounded-lg border bg-card p-6 shadow-sm">
+      <div className="space-y-1 text-center">
+        <h1 className="font-bold text-3xl">Welcome back</h1>
+        <p className="text-muted-foreground text-sm">
+          Enter your email and password to continue.
+        </p>
+      </div>
 
       <form
         className="space-y-4"
@@ -72,6 +78,7 @@ export default function SignInForm({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Email</Label>
                 <Input
+                  autoComplete="email"
                   id={field.name}
                   name={field.name}
                   onBlur={field.handleBlur}
@@ -80,7 +87,7 @@ export default function SignInForm({
                   value={field.state.value}
                 />
                 {field.state.meta.errors.map((error) => (
-                  <p className="text-red-500" key={error?.message}>
+                  <p className="text-destructive text-sm" key={error?.message}>
                     {error?.message}
                   </p>
                 ))}
@@ -95,6 +102,7 @@ export default function SignInForm({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Password</Label>
                 <Input
+                  autoComplete="current-password"
                   id={field.name}
                   name={field.name}
                   onBlur={field.handleBlur}
@@ -103,7 +111,7 @@ export default function SignInForm({
                   value={field.state.value}
                 />
                 {field.state.meta.errors.map((error) => (
-                  <p className="text-red-500" key={error?.message}>
+                  <p className="text-destructive text-sm" key={error?.message}>
                     {error?.message}
                   </p>
                 ))}
@@ -119,19 +127,20 @@ export default function SignInForm({
               disabled={!state.canSubmit || state.isSubmitting}
               type="submit"
             >
-              {state.isSubmitting ? "Submitting..." : "Sign In"}
+              {state.isSubmitting ? "Signing in..." : "Sign in"}
             </Button>
           )}
         </form.Subscribe>
       </form>
 
-      <div className="mt-4 text-center">
+      <div className="text-center text-sm">
         <Button
           className="text-indigo-600 hover:text-indigo-800"
           onClick={onSwitchToSignUp}
+          type="button"
           variant="link"
         >
-          Need an account? Sign Up
+          Need an account? Sign up with a password
         </Button>
       </div>
     </div>
