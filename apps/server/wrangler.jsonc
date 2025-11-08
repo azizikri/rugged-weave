@@ -29,4 +29,22 @@
       "migrations_dir": "./src/db/migrations",
     },
   ],
+  "env": {
+    "production": {
+      "vars": {
+        "NODE_ENV": "production",
+        "CORS_ORIGIN": "https://rugged-weave.azizikri.workers.dev",
+        "BETTER_AUTH_URL": "https://rugged-weave-server.azizikri.workers.dev",
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "rugged_weave",
+          "database_id": "ac8fce7f-5643-46c7-99e5-706f524eae47",
+          "preview_database_id": "ac8fce7f-5643-46c7-99e5-706f524eae47",
+          "migrations_dir": "./src/db/migrations",
+        },
+      ],
+    },
+  },
 }

@@ -37,7 +37,8 @@
     "db:migrate": "turbo -F @rugged-weave/db db:migrate",
     "deploy:all": "turbo run deploy --parallel",
     "deploy:web": "turbo -F web deploy",
-    "deploy:server": "turbo -F server deploy"
+    "deploy:server": "turbo -F server deploy",
+    "release": "semantic-release"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
@@ -51,7 +52,16 @@
     "lint-staged": "^16.2.6",
     "oxlint": "^1.26.0",
     "tsdown": "^0.15.12",
-    "@types/node": "^22.19.0"
+    "@types/node": "^22.19.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "semantic-release": "^25.0.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^13.1.1",
+    "@semantic-release/github": "^12.0.1",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/release-notes-generator": "^14.1.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": "bun x biome check --write --no-errors-on-unmatched"

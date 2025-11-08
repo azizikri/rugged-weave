@@ -14,6 +14,20 @@ declare namespace Cloudflare {
     BETTER_AUTH_URL: string;
     CORS_ORIGIN: string;
     DB: D1Database;
+    AUTH_TELEMETRY_WEBHOOK_URL?: string;
+    AUTH_TELEMETRY_WEBHOOK_TOKEN?: string;
+    AUTH_TELEMETRY_DEBUG?: string;
+    AUTH_OTP_WEBHOOK_URL?: string;
+    AUTH_OTP_WEBHOOK_TOKEN?: string;
+    AUTH_DEBUG_SHOW_OTP?: string;
+    AUTH_TELEMETRY_ENABLED?: string;
+    AUTH_COOKIE_DOMAIN?: string;
+    AUTH_TRUSTED_ORIGINS?: string;
+    GOOGLE_CLIENT_ID?: string;
+    GOOGLE_CLIENT_SECRET?: string;
+    APPLE_CLIENT_ID?: string;
+    APPLE_CLIENT_SECRET?: string;
+    APPLE_APP_BUNDLE_IDENTIFIER?: string;
   };
 }
 interface CloudflareBindings extends Cloudflare.Env {}
