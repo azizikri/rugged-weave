@@ -3,16 +3,17 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import z from "zod";
 import { authClient } from "@/lib/auth-client";
+import { getErrorMessage } from "@/lib/utils";
 import Loader from "./loader";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignUpForm({
-  onSwitchToSignIn,
-}: {
+type SignUpFormProps = {
   onSwitchToSignIn: () => void;
-}) {
+};
+
+export default function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const navigate = useNavigate({
     from: "/",
   });
@@ -36,10 +37,10 @@ export default function SignUpForm({
             navigate({
               to: "/dashboard",
             });
-            toast.success("Sign up successful");
+            toast.success("Account created");
           },
           onError: (error) => {
-            toast.error(error.error.message || error.error.statusText);
+            toast.error(getErrorMessage(error, "Unable to create account"));
           },
         }
       );
@@ -58,8 +59,14 @@ export default function SignUpForm({
   }
 
   return (
-    <div className="mx-auto mt-10 w-full max-w-md p-6">
-      <h1 className="mb-6 text-center font-bold text-3xl">Create Account</h1>
+    <div className="mx-auto w-full max-w-md space-y-6 rounded-lg border bg-card p-6 shadow-sm">
+      <div className="space-y-1 text-center">
+        <h1 className="font-bold text-3xl">Create your account</h1>
+        <p className="text-muted-foreground text-sm">
+          Set a password for buyers and sellers who prefer credentials. You can
+          also use the email code option for passwordless access.
+        </p>
+      </div>
 
       <form
         className="space-y-4"
@@ -75,6 +82,7 @@ export default function SignUpForm({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Name</Label>
                 <Input
+                  autoComplete="name"
                   id={field.name}
                   name={field.name}
                   onBlur={field.handleBlur}
@@ -82,7 +90,7 @@ export default function SignUpForm({
                   value={field.state.value}
                 />
                 {field.state.meta.errors.map((error) => (
-                  <p className="text-red-500" key={error?.message}>
+                  <p className="text-destructive text-sm" key={error?.message}>
                     {error?.message}
                   </p>
                 ))}
@@ -97,6 +105,7 @@ export default function SignUpForm({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Email</Label>
                 <Input
+                  autoComplete="email"
                   id={field.name}
                   name={field.name}
                   onBlur={field.handleBlur}
@@ -105,7 +114,7 @@ export default function SignUpForm({
                   value={field.state.value}
                 />
                 {field.state.meta.errors.map((error) => (
-                  <p className="text-red-500" key={error?.message}>
+                  <p className="text-destructive text-sm" key={error?.message}>
                     {error?.message}
                   </p>
                 ))}
@@ -120,6 +129,7 @@ export default function SignUpForm({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Password</Label>
                 <Input
+                  autoComplete="new-password"
                   id={field.name}
                   name={field.name}
                   onBlur={field.handleBlur}
@@ -128,7 +138,7 @@ export default function SignUpForm({
                   value={field.state.value}
                 />
                 {field.state.meta.errors.map((error) => (
-                  <p className="text-red-500" key={error?.message}>
+                  <p className="text-destructive text-sm" key={error?.message}>
                     {error?.message}
                   </p>
                 ))}
@@ -144,19 +154,20 @@ export default function SignUpForm({
               disabled={!state.canSubmit || state.isSubmitting}
               type="submit"
             >
-              {state.isSubmitting ? "Submitting..." : "Sign Up"}
+              {state.isSubmitting ? "Creating account..." : "Sign up"}
             </Button>
           )}
         </form.Subscribe>
       </form>
 
-      <div className="mt-4 text-center">
+      <div className="text-center text-sm">
         <Button
           className="text-indigo-600 hover:text-indigo-800"
           onClick={onSwitchToSignIn}
+          type="button"
           variant="link"
         >
-          Already have an account? Sign In
+          Already have a password? Sign in
         </Button>
       </div>
     </div>
